@@ -1,0 +1,30 @@
+﻿@model Duc_BTL.Areas.Admin.Models.category
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card mb-4">
+  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+    <h6 class="m-0 font-weight-bold text-primary">Chỉnh sửa thông tin danh mục</h6>
+  </div>
+  <div class="card-body">
+    <form asp-controller="categories" asp-action="edit">
+      <div class="form-group row">
+        <label class="col-sm-1 col-form-label">ID</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" placeholder="ID" asp-for="Id" readonly>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-1 col-form-label">Name</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" placeholder="ID" asp-for="Name">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-outline-primary mr-2">Lưu</button>
+      <a href="/admin/categories" class="btn btn-outline-danger">Trở lại</a>
+    </form>
+  </div>
+</div>

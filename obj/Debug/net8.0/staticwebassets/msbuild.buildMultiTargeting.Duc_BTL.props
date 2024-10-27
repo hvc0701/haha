@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Duc_BTL.props" />
+</Project>

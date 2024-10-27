@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Duc_BTL.Areas.Admin.Models.category>
+
+@{
+    ViewData["Title"] = "Danh sách danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+  <div class="col-lg-9 mb-4">
+    <!-- Simple Tables -->
+    <div class="card">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách danh mục</h6>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>#</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var item in Model)
+            {
+              <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>
+                  <a href="/admin/categories/edit?id=@item.Id" class="btn btn-outline-primary">Sửa</a>
+                  <a href="/admin/categories/details?id=@item.Id" class="btn btn-outline-info">Chi tiết</a>
+                  <a href="/admin/categories/delete?id=@item.Id" class="btn btn-outline-danger">Xóa</a>
+                 </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<a href="/admin/categories/create" class="btn btn-outline-primary mb-5">Thêm mới</a>

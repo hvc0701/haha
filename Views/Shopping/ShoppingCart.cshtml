@@ -1,0 +1,103 @@
+﻿@using System.Security.Claims
+@inject Duc_BTL.Controllers.ICartService _cartService;
+@inject Duc_BTL.Controllers.IProductService _productService;
+@using cart = Duc_BTL.Areas.Admin.Models.cart;
+@using product = Duc_BTL.Areas.Admin.Models.product;
+@{
+	int count = 0;
+	List<cart> listCart = new List<cart>();
+	if (User.Identity.IsAuthenticated)
+	{
+		int userId = int.Parse(User.FindFirstValue("Id"));
+		count = _cartService.getCartCountByUserId(userId);
+		listCart = _cartService.getListCartByUserId(userId);
+	}
+	product product = new product();
+	string[] images;
+	double total_price = (double)listCart.Sum(x => x.Total);
+}
+
+@{
+    ViewData["Title"] = "ShoppingCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- cart -->
+<div class="cart-section mt-150 mb-150">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-12" style="border: 1px solid #efefef; padding: 0;">
+				<div class="cart-table-wrap">
+					<table class="cart-table">
+						<thead class="cart-table-head">
+							<tr class="table-head-row">
+								<th class="product-remove"></th>
+								<th class="product-image">Product Image</th>
+								<th class="product-name">Name</th>
+								<th class="product-price">Price</th>
+								<th class="product-quantity">Quantity</th>
+								<th class="product-total">Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var cart in listCart)
+							{
+								{
+									product = _productService.getProductById(cart.ProductId);
+								}
+								<tr class="table-body-row">
+									<td class="product-remove"><a href="/shopping/removefromcart?id=@cart.Id"><i class="far fa-window-close"></i></a></td>
+									<td class="product-image"><img src="~/assets/img/@product.Image" alt=""></td>
+									<td class="product-name"><a href="/products/details?id=@product.Id">@product.Name</a></td>
+									<td class="product-price">$@product.Price</td>
+									<td class="product-quantity"><input type="number" value="@cart.Quantity"></td>
+									<td class="product-total">$@cart.Total</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="col-lg-4">
+				<div class="total-section">
+					<table class="total-table">
+						<thead class="total-table-head">
+							<tr class="table-total-row">
+								<th>Total</th>
+								<th>Price</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="total-data">
+								<td><strong>Subtotal: </strong></td>
+								<td>$@total_price</td>
+							</tr>
+							<tr class="total-data">
+								<td><strong>Shipping: </strong></td>
+								<td>$2</td>
+							</tr>
+							<tr class="total-data">
+								<td><strong>Total: </strong></td>
+								<td>$@(total_price+2)</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="cart-buttons">
+						<a href="cart.html" class="boxed-btn">Update Cart</a>
+						<a href="checkout.html" class="boxed-btn black">Check Out</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end cart -->
+
+<style>
+	#sticker {
+		background: #051922 !important;
+	}
+</style>
+

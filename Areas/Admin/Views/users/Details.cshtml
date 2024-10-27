@@ -1,0 +1,54 @@
+﻿@model Duc_BTL.Areas.Admin.Models.user
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card mb-4">
+  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+    <h6 class="m-0 font-weight-bold text-primary">Chỉnh sửa thông tin người dùng</h6>
+  </div>
+  <div class="card-body">
+    <form>
+
+      <div class="form-group row">
+        <label asp-for="Id" class="col-sm-1 control-label">ID</label>
+        <div class="col-sm-3">
+          <input type="text" asp-for="Id" class="form-control" readonly />
+          <span asp-validation-for="Id" class="text-danger"></span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label asp-for="Name" class="col-sm-1 control-label">Name</label>
+        <div class="col-sm-3">
+          <input type="text" asp-for="Name" class="form-control" readonly />
+          <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label asp-for="Email" class="col-sm-1 control-label">Email</label>
+        <div class="col-sm-3">
+          <input type="email" asp-for="Email" class="form-control" readonly />
+          <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label asp-for="Password" class="col-sm-1 control-label">Password</label>
+        <div class="col-sm-3">
+          <input type="password" asp-for="Password" class="form-control" readonly />
+          <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label asp-for="Role" class="col-sm-1 control-label">Role</label>
+        <div class="col-sm-3">
+          <select class="form-control" asp-for="Role" asp-items="ViewBag.Roles"></select>
+          <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+      </div>
+      <a href="/admin/users/edit?id=@Model.Id" class="btn btn-outline-primary mr-2">Sửa</a>
+      <a href="/admin/users" class="btn btn-outline-danger">Trở lại</a>
+    </form>
+  </div>
+</div>

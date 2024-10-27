@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Duc_BTL.Areas.Admin.Models.product>
+
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+  <div class="col-lg-12 mb-4">
+    <!-- Simple Tables -->
+    <div class="card">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Image</th>
+              <th>Price</th>
+              <th>Category</th>
+              <th>#</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var item in Model)
+            {
+              <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>
+                  @{
+                    // Kiểm tra xem mô tả có null hay không trước khi cắt chuỗi
+                    if (!string.IsNullOrEmpty(item.Description) && item.Description.Split(" ").Length > 10)
+                    {
+                      // Chia chuỗi mô tả thành từng từ
+                      var words = item.Description.Split(' ');
+                      // Lấy 20 từ từ mô tả
+                      var shortDescription = string.Join(" ", words.Take(6));
+                      // Chia thành 2 dòng
+                      var halfLength = shortDescription.Length / 2;
+                      // Hiển thị từng dòng mô tả
+                      <span>@shortDescription</span>
+                      if (item.Description.Length > shortDescription.Length)
+                      {
+                        <text>...</text>
+                      }
+                    }
+                    else
+                    {
+                      <div>@item.Description</div>
+                    }
+                  }
+                </td>
+                <td>@item.Image</td>
+                <td>@String.Format("${0:#,##0.00}", item.Price)</td>
+                <td>@item.category?.Name</td>
+                <td>
+                  <a href="/admin/products/edit?id=@item.Id" class="btn btn-outline-primary">Sửa</a>
+                  <a href="/admin/products/details?id=@item.Id" class="btn btn-outline-info">Chi tiết</a>
+                  <a href="/admin/products/delete?id=@item.Id" class="btn btn-outline-danger">Xóa</a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<a href="/admin/products/create" class="btn btn-outline-primary mb-5">Thêm mới</a>
